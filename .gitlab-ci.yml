@@ -1,0 +1,19 @@
+image: rust
+
+pages:
+  variables:
+    CARGO_HOME: $CI_PROJECT_DIR/cargo
+  before_script:
+    - export PATH="$PATH:$CARGO_HOME/bin"
+    - mkdir -p $CARGO_HOME/bin 
+    - cd $CARGO_HOME/bin
+    - wget https://github.com/rust-lang/mdBook/releases/download/v0.4.12/mdbook-v0.4.12-x86_64-unknown-linux-gnu.tar.gz 
+    - wget https://github.com/badboy/mdbook-mermaid/releases/download/v0.8.3/mdbook-mermaid-v0.8.3-x86_64-unknown-linux-gnu.tar.gz 
+    - tar xvzf mdbook-v0.4.12-x86_64-unknown-linux-gnu.tar.gz
+    - tar xvzf mdbook-mermaid-v0.8.3-x86_64-unknown-linux-gnu.tar.gz
+    - cd $CI_PROJECT_DIR
+  script:
+    - mdbook build -d public 
+  artifacts:
+      paths:
+        - public
